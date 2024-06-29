@@ -4,6 +4,7 @@ import (
 	modelApi "github.com/kaburov38/GoShort/model/api"
 	"github.com/kaburov38/GoShort/model"
 	repository "github.com/kaburov38/GoShort/repository"
+	"gorm.io/gorm"
 )
 
 type Service struct {
@@ -29,7 +30,7 @@ func (s *Service) Find(request modelApi.FindRequest) (response modelApi.MappingR
 }
 
 func (s *Service) Update(request modelApi.UpdateRequest) error {
-	return s.repo.Update(model.Mapping{Source: request.Source}, model.Mapping{Source: request.Source, Target: request.Target})
+	return s.repo.Update(model.Mapping{Model: gorm.Model{ID: request.ID}, Source: request.Source, Target: request.Target})
 }
 
 func (s *Service) Delete(request modelApi.DeleteRequest) error {

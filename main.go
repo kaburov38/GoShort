@@ -19,7 +19,7 @@ func main() {
 	router := gin.Default()
 
 	router.POST("/mapping", ctrl.Insert)
-	router.GET("/:source", ctrl.Find)
+	router.GET("/read/:source", ctrl.Find)
 	router.PUT("/mapping", ctrl.Update)
 	router.DELETE("/mapping", ctrl.Delete)
 

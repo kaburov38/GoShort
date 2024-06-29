@@ -15,9 +15,9 @@ func NewRepository(db *gorm.DB) *Repository {
 
 func (repo *Repository) Insert(model model.Mapping) (err error) {
 	tx := repo.DB.Begin()
-	tx.Create(&model)
+	result := tx.Create(&model)
 
-	err = tx.Error
+	err = result.Error
 	if err != nil {
 		tx.Rollback()
 		return
@@ -29,16 +29,16 @@ func (repo *Repository) Insert(model model.Mapping) (err error) {
 
 func (repo *Repository) Find(url string) (model model.Mapping, err error) {
 	tx := repo.DB.Begin()
-	tx.First(&model, "source = ?", url)
-	err = tx.Error
+	result := tx.First(&model, "source = ?", url)
+	err = result.Error
 	return
 }
 
 func (repo *Repository) Delete(model model.Mapping) (err error) {
 	tx := repo.DB.Begin()
-	tx.Delete(&model)
+	result := tx.Delete(&model)
 
-	err = tx.Error
+	err = result.Error
 	if err != nil {
 		tx.Rollback()
 		return
@@ -48,11 +48,11 @@ func (repo *Repository) Delete(model model.Mapping) (err error) {
 	return
 }
 
-func (repo *Repository) Update(old model.Mapping, new model.Mapping) (err error) {
+func (repo *Repository) Update(updated model.Mapping) (err error) {
 	tx := repo.DB.Begin()
-	tx.Model(&old).Updates(&new)
+	result := tx.Model(&model.Mapping{}).Where("id = ?", updated.ID).Updates(updated)
 
-	err = tx.Error
+	err = result.Error
 	if err != nil {
 		tx.Rollback()
 		return

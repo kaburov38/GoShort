@@ -14,6 +14,7 @@ type DeleteRequest struct {
 }
 
 type UpdateRequest struct {
+	ID     uint   `json:"id"`
 	Source string `json:"source"`
 	Target string `json:"target"`
 }

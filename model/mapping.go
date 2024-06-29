@@ -6,7 +6,7 @@ import (
 
 type Mapping struct {
 	gorm.Model
-	Source string
+	Source string `gorm:"unique"`
 	Target string
 }
 
